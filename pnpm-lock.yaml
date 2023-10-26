@@ -20,6 +20,12 @@ devDependencies:
   nuxt:
     specifier: ^3.8.0
     version: 3.8.0(vite@4.5.0)
+  nuxt-lucide-icons:
+    specifier: ^1.0.2
+    version: 1.0.2(vue@3.3.7)
+  nuxt-phosphor-icons:
+    specifier: ^1.0.8
+    version: 1.0.8(vue@3.3.7)
   vue:
     specifier: ^3.3.7
     version: 3.3.7
@@ -1460,6 +1466,15 @@ packages:
       '@parcel/watcher-win32-arm64': 2.3.0
       '@parcel/watcher-win32-ia32': 2.3.0
       '@parcel/watcher-win32-x64': 2.3.0
+    dev: true
+
+  /@phosphor-icons/vue@2.1.6(vue@3.3.7):
+    resolution: {integrity: sha512-j4iVvNT4JbDR2udIVfakKZHd14i3jCvO4b24OC0W/1rasftU8qVg1Tnb3QDwAT0teNU+UxvaM+kCWxfGHC2dUg==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      vue: '>=3.2.39'
+    dependencies:
+      vue: 3.3.7
     dev: true
 
   /@pkgjs/parseargs@0.11.0:
@@ -4433,6 +4448,14 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
+  /lucide-vue-next@0.289.0(vue@3.3.7):
+    resolution: {integrity: sha512-8wSE/WRLQ4iTwnEt/Ex+GgadzjliLhPScMPdRb0eBJDe14U8UFQCTOuaC3jQWP16tCVyr4zFL32WsZFTVwAPZQ==}
+    peerDependencies:
+      vue: '>=3.0.1'
+    dependencies:
+      vue: 3.3.7
+    dev: true
+
   /magic-string-ast@0.3.0:
     resolution: {integrity: sha512-0shqecEPgdFpnI3AP90epXyxZy9g6CRZ+SZ7BcqFwYmtFEnZ1jpevcV5HoyVnlDS9gCnc1UIg3Rsvp3Ci7r8OA==}
     engines: {node: '>=16.14.0'}
@@ -5050,6 +5073,29 @@ packages:
     hasBin: true
     optionalDependencies:
       fsevents: 2.3.3
+    dev: true
+
+  /nuxt-lucide-icons@1.0.2(vue@3.3.7):
+    resolution: {integrity: sha512-qB6/FyKGdyrLq20nHHnWTY4AmiZJ5ZRqw8G74CnsHqYmrlqM+RdDkc/dxdBk1rFmEhIsup2JIT/EQgwgjyHXXw==}
+    dependencies:
+      '@nuxt/kit': 3.8.0
+      lucide-vue-next: 0.289.0(vue@3.3.7)
+      pathe: 1.1.1
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
+      - vue
+    dev: true
+
+  /nuxt-phosphor-icons@1.0.8(vue@3.3.7):
+    resolution: {integrity: sha512-3EvdYqB/Fh16j81hHOqz0lWVOnoW1Y1r1Uq5t0CHxdyaCxUvFHtgHN2ze5/4h+iJZhuC0GlX8vuGql1u0ErGOg==}
+    dependencies:
+      '@nuxt/kit': 3.8.0
+      '@phosphor-icons/vue': 2.1.6(vue@3.3.7)
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
+      - vue
     dev: true
 
   /nuxt@3.8.0(vite@4.5.0):

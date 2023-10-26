@@ -16,6 +16,10 @@
                 </div>
             </div>
             <div class="card p-4 shadow-xl w-full md:w-1/2 sm:max-w-full">
+                <div v-if="menu.content" class="tooltip absolute top-2 right-2" data-tip="copier menu">
+                    <PhosphorIconCopy class="hover:cursor-pointer" size="32" @click="copyToClipboardAsPlainText"/>
+                </div>
+
                 <Loader v-if="isLoading"/>
                 <div v-else-if="menu.content" class="max-h-fit overflow-y-scroll">
                     <div class="title flex flex-col">
@@ -39,6 +43,8 @@
                 </div>
             </div>
         </div>
+
+        <Toast ref="toastRef"/>
     </div>
 </template>
 
@@ -46,6 +52,7 @@
 import NumberInput from '@/components/ui/NumberInput.vue';
 import SelectInput from '@/components/ui/SelectInput.vue';
 import Loader from "@/components/ui/Loader.vue";
+import Toast from "@/components/ui/Toast.vue";
 
 const formData = ref({
     maxCalories: 0,
@@ -66,6 +73,41 @@ const menu = ref({
     content: null,
     specs: {}
 })
+
+const toastRef = ref(null);
+
+
+const copyToClipboardAsHTML = () => {
+    const menuContent = menu.value.content;
+    if (menuContent) {
+        const textArea = document.createElement("textarea");
+        textArea.value = menuContent;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textArea);
+    }
+
+    toastRef.value.start('Contenu du menu copié');
+};
+
+const copyToClipboardAsPlainText = () => {
+    const menuContent = menu.value.content;
+    if (menuContent) {
+        const tempElement = document.createElement('div');
+        tempElement.innerHTML = menuContent;
+        const plainText = tempElement.textContent;
+
+        const textArea = document.createElement('textarea');
+        textArea.value = plainText;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+    }
+
+    toastRef.value.start('Contenu du menu copié');
+}
 
 const generateMenu = async () => {
     isLoading.value = true;
