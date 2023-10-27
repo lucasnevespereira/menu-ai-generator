@@ -3,6 +3,7 @@ export default defineNuxtConfig({
     // devtools: { enabled: true },
     modules: [
         '@nuxtjs/tailwindcss',
-        "nuxt-phosphor-icons"
+        "nuxt-phosphor-icons",
+        '@nuxtjs/kinde'
     ],
 })

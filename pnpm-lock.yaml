@@ -16,6 +16,9 @@ devDependencies:
   '@nuxt/devtools':
     specifier: latest
     version: 1.0.0(nuxt@3.8.0)(vite@4.5.0)
+  '@nuxtjs/kinde':
+    specifier: ^0.1.3
+    version: 0.1.3
   '@nuxtjs/tailwindcss':
     specifier: ^6.8.1
     version: 6.8.1(webpack@5.89.0)
@@ -896,6 +899,12 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
+  /@kinde-oss/kinde-typescript-sdk@2.2.2:
+    resolution: {integrity: sha512-GFaPGsJABJZ3U++7qgUVcHttjFo3QYmPT7Unp9L1VUvLhAmNnzi0B+CUPGv6faY5R6pF6OJJz5kbX2ydWc45ZQ==}
+    dependencies:
+      uncrypto: 0.1.3
+    dev: true
+
   /@koa/router@9.4.0:
     resolution: {integrity: sha512-dOOXgzqaDoHu5qqMEPLKEgLz5CeIA7q8+1W62mCvFVCOqeC71UoTGJ4u1xUSOpIl2J1x2pqrNULkFteUeZW3/A==}
     engines: {node: '>= 8.0.0'}
@@ -1308,6 +1317,17 @@ packages:
       - vls
       - vti
       - vue-tsc
+    dev: true
+
+  /@nuxtjs/kinde@0.1.3:
+    resolution: {integrity: sha512-Tbiq5wPykf2fIi70IZbLY7g6WLS/tEQnk/uElFJZvPOjh1KNP3ovsvUN9eBPSHTTKXCb9AnTutzWZG2Vft9uHw==}
+    dependencies:
+      '@kinde-oss/kinde-typescript-sdk': 2.2.2
+      '@nuxt/kit': 3.8.0
+      defu: 6.1.3
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
     dev: true
 
   /@nuxtjs/tailwindcss@6.8.1(webpack@5.89.0):
