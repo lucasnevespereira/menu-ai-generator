@@ -44,7 +44,7 @@
                         <p class="text-lg">Cliquez sur "Générer" pour créer votre menu</p>
                     </div>
                 </div>
-                <div class="tooltip absolute bottom-2 right-3" data-tip="télecharger en pdf">
+                <div v-if="menu.content" class="tooltip absolute bottom-2 right-3" data-tip="télecharger en pdf">
                     <PhosphorIconDownloadSimple class="hover:cursor-pointer" size="24" @click="saveToPDF"/>
                 </div>
             </div>
