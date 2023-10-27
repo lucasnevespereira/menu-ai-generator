@@ -6,7 +6,11 @@ defineProps({
         required: true
     },
     label: String,
-    placeholder: String
+    placeholder: String,
+    size: {
+        type: String,
+        default: "md"
+    }
 })
 </script>
 
@@ -20,7 +24,7 @@ defineProps({
                 :value="modelValue"
                 @input="$emit('update:modelValue', $event.target.value)"
                 required
-                class="input input-bordered w-full max-w-xs"
+                :class="['input input-bordered',`input-${size} max-w-${size}`]"
                 :placeholder="placeholder"
         />
     </div>

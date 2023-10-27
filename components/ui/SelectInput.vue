@@ -8,12 +8,16 @@ defineProps({
     label: String,
     placeholder: String,
     options: Array,
+    size: {
+        type: String,
+        default: "md"
+    }
 })
 </script>
 
 
 <template>
-    <div class="form-control w-full max-w-xs">
+    <div :class="['form-control w-full', `max-w-${size}`]" >
         <label class="label">
             <span class="label-text">{{ label }}</span>
         </label>

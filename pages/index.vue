@@ -1,14 +1,17 @@
 <template>
     <div class="container p-4 w-full mx-auto">
-        <h1 class="text-3xl font-bold mb-4">Menu AI</h1>
+        <h2 class="text-md font-bold mb-4">Génerer votre menu</h2>
         <div class="flex flex-wrap">
             <div class="form-container w-full md:w-1/2 mb-4 mx-auto">
-                <NumberInput label="Calories max par jour (kcal):" v-model="formData.maxCalories"
+                <NumberInput size="xs" label="Calories max par jour (kcal):" v-model="formData.maxCalories"
                              placeholder="Calories"/>
-                <NumberInput label="Glucides max par jour (%)" v-model="formData.maxCarbs" placeholder="Glucides"/>
-                <NumberInput label="Proteines max par jour (%)" v-model="formData.maxProteins" placeholder="Proteines"/>
-                <NumberInput label="Lipides max par jour (%)" v-model="formData.maxFats" placeholder="Lipides"/>
-                <SelectInput label="Allergenes" v-model="formData.allergies" placeholder="Allergenes"
+                <NumberInput size="xs" label="Glucides max par jour (%)" v-model="formData.maxCarbs"
+                             placeholder="Glucides"/>
+                <NumberInput size="xs" label="Proteines max par jour (%)" v-model="formData.maxProteins"
+                             placeholder="Proteines"/>
+                <NumberInput size="xs" label="Lipides max par jour (%)" v-model="formData.maxFats"
+                             placeholder="Lipides"/>
+                <SelectInput size="xs" label="Allergenes" v-model="formData.allergies" placeholder="Allergenes"
                              :options="allergyOptions"/>
 
                 <div class="form-control w-full max-w-xs mt-4">
@@ -41,6 +44,9 @@
                         <p class="text-lg">Cliquez sur "Générer" pour créer votre menu</p>
                     </div>
                 </div>
+                <div class="tooltip absolute bottom-2 right-3" data-tip="télecharger en pdf">
+                    <PhosphorIconDownloadSimple class="hover:cursor-pointer" size="24" @click="saveToPDF"/>
+                </div>
             </div>
         </div>
 
@@ -53,6 +59,8 @@ import NumberInput from '@/components/ui/NumberInput.vue';
 import SelectInput from '@/components/ui/SelectInput.vue';
 import Loader from "@/components/ui/Loader.vue";
 import Toast from "@/components/ui/Toast.vue";
+import jsPDF from "jspdf";
+import 'jspdf-autotable';
 
 const formData = ref({
     maxCalories: 0,
@@ -77,20 +85,6 @@ const menu = ref({
 const toastRef = ref(null);
 
 
-const copyToClipboardAsHTML = () => {
-    const menuContent = menu.value.content;
-    if (menuContent) {
-        const textArea = document.createElement("textarea");
-        textArea.value = menuContent;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand("copy");
-        document.body.removeChild(textArea);
-    }
-
-    toastRef.value.start('Contenu du menu copié');
-};
-
 const copyToClipboardAsPlainText = () => {
     const menuContent = menu.value.content;
     if (menuContent) {
@@ -108,6 +102,43 @@ const copyToClipboardAsPlainText = () => {
 
     toastRef.value.start('Contenu du menu copié');
 }
+
+
+const saveToPDF = () => {
+    const menuContent = menu.value.content;
+    if (menuContent) {
+        const plainText = menuContent
+            .replace(/<br>/g, '\n')
+            .replace(/<\/?[^>]+(>|$)/g, ''); // remove any remaining HTML tags
+
+        const lines = plainText.split('\n');
+
+        const pdf = new jsPDF();
+
+        pdf.setFontSize(16);
+        pdf.setFont('helvetica');
+        pdf.text('Menu du Jour', 15, 10).setFont('helvetica', "bold")
+
+        pdf.setFontSize(12);
+        pdf.autoTable({
+            startY: 20,
+            head: [['Repas', 'Instructions']],
+            headStyles: {fillColor: [76, 184, 189]},
+            body: lines.map((line, index) => {
+                if (line.startsWith('•')) {
+                    // content lines with bullet points
+                    return ['', line];
+                } else {
+                    // lines without bullet points as headers
+                    return [line, ''];
+                }
+            }),
+        });
+
+        pdf.save('menu.pdf');
+    }
+};
+
 
 const generateMenu = async () => {
     isLoading.value = true;
