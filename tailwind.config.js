@@ -1,12 +1,54 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [],
-  theme: {
-    extend: {},
-  },
-  plugins: [require("daisyui")],
-  daisyui: {
-    themes: ["light", "dark", "cupcake"],
-  },
+    content: [],
+    theme: {
+        extend: {},
+    },
+    plugins: [require("@tailwindcss/typography"), require("daisyui")],
+    daisyui: {
+        themes: ["light",
+            "dark",
+            "cupcake",
+            "bumblebee",
+            "emerald",
+            "corporate",
+            "synthwave",
+            "retro",
+            "cyberpunk",
+            "valentine",
+            "halloween",
+            "garden",
+            "forest",
+            "aqua",
+            "lofi",
+            "pastel",
+            "fantasy",
+            "wireframe",
+            "black",
+            "luxury",
+            "dracula",
+            "cmyk",
+            "autumn",
+            "business",
+            "acid",
+            "lemonade",
+            "night",
+            "coffee",
+            "winter",
+            {
+                jenny: {
+                    "primary": "#193346",
+                    "secondary": "#ECF6FA",
+                    "accent": "#3D97D9",
+                    "neutral": "#ECF6FA",
+                    "base-100": "#fcfcfd",
+                    "info": "#85cde0",
+                    "success": "#1edcbf",
+                    "warning": "#f4dd66",
+                    "error": "#ec7484",
+                },
+            }
+        ],
+    },
 }
 

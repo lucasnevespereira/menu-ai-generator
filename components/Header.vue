@@ -2,14 +2,14 @@
 </script>
 
 <template>
-    <div class="navbar bg-base-100 sticky shadow-sm p-4">
+    <div class="navbar sticky p-8 items-center">
         <div class="flex-1">
-            <a class="btn btn-ghost hover:bg-none normal-case text-xl">menuAI</a>
+            <a class="btn btn-ghost hover:bg-none normal-case text-2xl font-bold">menuAI</a>
         </div>
         <div class="flex-none mr-2">
             <div v-if="$auth.loggedIn" class="dropdown dropdown-end">
-                <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-                    <div class="w-10 rounded-full">
+                <label tabindex="0" class="btn btn-ghost btn-circle avatar w-14 h-14">
+                    <div class="w-14 h-14 rounded-full">
                         <img :src="$auth.user.picture"/>
                     </div>
                 </label>
@@ -28,7 +28,7 @@
                 </ul>
             </div>
             <NuxtLink v-else to="/api/login" external>
-                Sign in
+                Se Connecter
             </NuxtLink>
         </div>
     </div>

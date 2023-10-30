@@ -1,14 +1,19 @@
 import {buildAIPrompt} from "@/server/utils/prompt";
-import {extractAndFormatMenuContent} from "@/server/utils/format";
+import {extractMenu, extractShoppingList, formatMenuSpecs} from "@/server/utils/format";
 import {getOpenAICompletion} from "@/server/connectors/openai";
 
 export default defineEventHandler(async event => {
-    const body = await readBody(event)
-    const prompt = buildAIPrompt(body)
+    const menuSpecs = await readBody(event)
+    const prompt = buildAIPrompt(menuSpecs)
     const menuContent = await getOpenAICompletion(prompt)
+    const menu = extractMenu(menuContent)
+    const shoppingList = extractShoppingList(menuContent)
+    console.log("menu", menuContent)
     return {
-        menu: extractAndFormatMenuContent(menuContent),
-        specs: body
+        menu: menu,
+        specs: menuSpecs,
+        description: formatMenuSpecs(menuSpecs),
+        shoppingList: shoppingList
     }
 })
 

@@ -1,55 +1,76 @@
 <template>
-    <div class="container p-4 w-full mx-auto">
-        <h2 class="text-md font-bold mb-4">Génerer votre menu</h2>
+    <div class="container w-full mx-auto bg-base-100 p-10 rounded-lg">
         <div class="flex flex-wrap">
+            <!--Form container-->
             <div class="form-container w-full md:w-1/2 mb-4 mx-auto">
-                <NumberInput size="xs" label="Calories max par jour (kcal):" v-model="formData.maxCalories"
-                             placeholder="Calories"/>
-                <NumberInput size="xs" label="Glucides max par jour (%)" v-model="formData.maxCarbs"
-                             placeholder="Glucides"/>
-                <NumberInput size="xs" label="Proteines max par jour (%)" v-model="formData.maxProteins"
-                             placeholder="Proteines"/>
-                <NumberInput size="xs" label="Lipides max par jour (%)" v-model="formData.maxFats"
-                             placeholder="Lipides"/>
-                <SelectInput size="xs" label="Allergenes" v-model="formData.allergies" placeholder="Allergenes"
-                             :options="allergyOptions"/>
-
+                <h2 class="text-primary font-bold text-2xl mb-4">Tes Options</h2>
+                <div class="w-full">
+                    <NumberInput size="md" label="Calories" v-model="formData.maxCalories"
+                                 placeholder="0" placeholder-symbol="kcal"/>
+                </div>
+                <div class="flex flex-wrap max-w-full">
+                    <NumberInput size="sm" label="Glucides" v-model="formData.maxCarbs"
+                                 placeholder="0" placeholder-symbol="%"/>
+                    <NumberInput size="sm" label="Proteines" v-model="formData.maxProteins"
+                                 placeholder="0" placeholder-symbol="%"/>
+                    <NumberInput size="sm" label="Lipides" v-model="formData.maxFats"
+                                 placeholder="0" placeholder-symbol="%"/>
+                </div>
+                <div class="w-full">
+                    <SelectInput size="md" label="Régimes" v-model="formData.allergies" placeholder="Allergenes"
+                                 :options="allergyOptions"/>
+                </div>
                 <div class="form-control w-full max-w-xs mt-4">
                     <button @click="generateMenu" class="btn btn-primary">Générer</button>
                 </div>
             </div>
-            <div class="card p-4 shadow-xl w-full md:w-1/2 sm:max-w-full">
-                <div v-if="menu.content" class="tooltip absolute top-2 right-2" data-tip="copier menu">
-                    <PhosphorIconCopy class="hover:cursor-pointer" size="32" @click="copyToClipboardAsPlainText"/>
+            <!--Menu container-->
+            <div class="menu-container md:w-1/2 sm:max-w-full">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-primary font-bold text-2xl">Ton Menu</h2>
+                    <div class="actions relative flex flex-row items-center justify-around">
+                        <div class="tooltip" data-tip="copier menu">
+                            <PhosphorIconCopy class="hover:cursor-pointer" size="24" @click="copyToClipboard"/>
+                        </div>
+                        <div class="tooltip ml-2" data-tip="télecharger en pdf">
+                            <PhosphorIconDownloadSimple class="hover:cursor-pointer" size="24" @click="saveToPDF"/>
+                        </div>
+                    </div>
                 </div>
+                <div class="card menu-card p-4 shadow-xl w-full no-scrollbar">
+                    <Loader v-if="isLoading"/>
+                    <div v-else-if="menu.content" class="">
+                        <div class="title flex flex-col">
+                            <h2 class="text-xl font-semibold mb-2">Menu {{ menu.specs.maxCalories }}kcal</h2>
+                            <p class="text-sm mb-2 font-semibold">
+                                {{ menu.specs.maxCalories }} calories,
+                                lipides {{ menu.specs.maxFats }}%,
+                                glucides{{ menu.specs.maxCarbs }}%,
+                                proteines {{ menu.specs.maxProteins }}%
+                            </p>
+                        </div>
+                        <div class="menu-content p-4">
+                            <div class="menu-text">
+                                <div v-html="menu.content"></div>
+                                <hr class="m-2">
+                                <div class="flex flex-col">
+                                    <h2 class="text-xl font-semibold mb-2">Liste de Courses</h2>
+                                    <div v-html="menu.shoppingList"></div>
+                                </div>
 
-                <Loader v-if="isLoading"/>
-                <div v-else-if="menu.content" class="max-h-fit overflow-y-scroll">
-                    <div class="title flex flex-col">
-                        <h2 class="text-xl font-semibold mb-2">Menu {{ menu.specs.maxCalories }}kcal</h2>
-                        <p class="text-sm mb-2 font-semibold">
-                            {{ menu.specs.maxCalories }} calories,
-                            lipides {{ menu.specs.maxFats }}%,
-                            glucides{{ menu.specs.maxCarbs }}%,
-                            proteines {{ menu.specs.maxProteins }}%
-                        </p>
-                    </div>
+                            </div>
 
-                    <div class="menu-content p-4">
-                        <div v-html="menu.content" class="menu-text"></div>
+                        </div>
                     </div>
-                </div>
-                <div v-else>
-                    <div class="h-full w-full flex flex-col justify-center items-center text-center">
-                        <p class="text-lg">Cliquez sur "Générer" pour créer votre menu</p>
+                    <div v-else>
+                        <div class="h-full w-full flex flex-col justify-center items-center text-center">
+
+                        </div>
                     </div>
-                </div>
-                <div v-if="menu.content" class="tooltip absolute bottom-2 right-3" data-tip="télecharger en pdf">
-                    <PhosphorIconDownloadSimple class="hover:cursor-pointer" size="24" @click="saveToPDF"/>
                 </div>
             </div>
-        </div>
 
+        </div>
         <Toast ref="toastRef"/>
     </div>
 </template>
@@ -79,13 +100,14 @@ const isLoading = ref(false);
 
 const menu = ref({
     content: null,
-    specs: {}
+    specs: {},
+    description: "",
+    shoppingList: null
 })
 
 const toastRef = ref(null);
 
-
-const copyToClipboardAsPlainText = () => {
+const copyToClipboard = () => {
     const menuContent = menu.value.content;
     if (menuContent) {
         const tempElement = document.createElement('div');
@@ -103,7 +125,6 @@ const copyToClipboardAsPlainText = () => {
     toastRef.value.start('Contenu du menu copié');
 }
 
-
 const saveToPDF = () => {
     const menuContent = menu.value.content;
     if (menuContent) {
@@ -116,13 +137,11 @@ const saveToPDF = () => {
         const pdf = new jsPDF();
 
         pdf.setFontSize(16);
-        pdf.setFont('helvetica');
-        pdf.text('Menu du Jour', 15, 10).setFont('helvetica', "bold")
-
+        pdf.text(`Menu du Jour (${menu.value.specs.maxCalories} kcal)`, 15, 10)
         pdf.setFontSize(12);
         pdf.autoTable({
             startY: 20,
-            head: [['Repas', 'Instructions']],
+            head: [['Repas', 'Contenu']],
             headStyles: {fillColor: [76, 184, 189]},
             body: lines.map((line, index) => {
                 if (line.startsWith('•')) {
@@ -135,38 +154,60 @@ const saveToPDF = () => {
             }),
         });
 
-        pdf.save('menu.pdf');
+        const shoppingListContent = menu.value.shoppingList
+        if (shoppingListContent) {
+            const plainText = shoppingListContent
+                .replace(/<br>/g, '\n')
+                .replace(/<\/?[^>]+(>|$)/g, ''); // remove any remaining HTML tags
+
+            const lines = plainText.split('\n');
+            pdf.addPage(); // Add a new page for the shopping list
+
+            pdf.setFontSize(16);
+            pdf.text('Liste des courses', 15, 10);
+
+            // Create a table for the shopping list using the extracted shoppingListContent
+            pdf.autoTable({
+                startY: 20,
+                head: [['Produit']],
+                headStyles: {fillColor: [76, 184, 189]},
+                body: lines.map(item => [item]),
+            });
+        }
+
+        pdf.save('menu-ai.pdf');
     }
 };
 
 
 const generateMenu = async () => {
     isLoading.value = true;
-    const {data} = await useFetch('/api/generate/menu', {
+    const {data} = await useFetch('/api/generate/menutmp', {
         method: 'POST', body: formData.value
     })
+    console.log(data.value)
     menu.value.content = data.value.menu
-    menu.value.specs = {
-        maxCalories: formData.value.maxCalories,
-        maxCarbs: formData.value.maxCarbs,
-        maxProteins: formData.value.maxProteins,
-        maxFats: formData.value.maxFats,
-        allergies: formData.value.allergies,
-    }
+    menu.value.specs = data.value.specs
+    menu.value.description = data.value.description
+    menu.value.shoppingList = data.value.shoppingList
     isLoading.value = false
 };
 </script>
 
 <style scoped>
-.menu-content {
-    max-height: 100%;
+
+.menu-container {
+    max-height: 70vh;
 }
 
 .menu-text {
     font-size: 16px;
     line-height: 1.5;
-    max-height: 60vh;
-    overflow-y: auto;
+}
+
+.menu-card {
+    max-height: 90%;
+    overflow-y: scroll;
 }
 
 </style>

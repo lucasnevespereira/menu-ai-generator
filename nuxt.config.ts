@@ -6,4 +6,7 @@ export default defineNuxtConfig({
         "nuxt-phosphor-icons",
         '@nuxtjs/kinde'
     ],
+    tailwindcss: {
+        cssPath: '~/assets/css/tailwind.css',
+    }
 })

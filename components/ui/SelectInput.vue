@@ -17,9 +17,9 @@ defineProps({
 
 
 <template>
-    <div :class="['form-control w-full', `max-w-${size}`]" >
+    <div :class="['form-control max-w-[200px]', `max-w-${size}`]" >
         <label class="label">
-            <span class="label-text">{{ label }}</span>
+            <span class="label-text font-light uppercase text-lg tracking-widest">{{ label }}</span>
         </label>
         <select class="select select-bordered" :value="modelValue"
                 @input="$emit('update:modelValue', $event.target.value)">
