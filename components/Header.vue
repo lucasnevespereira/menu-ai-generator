@@ -4,7 +4,7 @@
 <template>
     <div class="navbar sticky p-8 items-center">
         <div class="flex-1">
-            <a class="btn btn-ghost hover:bg-none normal-case text-2xl font-bold">menuAI</a>
+            <NuxtLink to="/" class="btn btn-ghost hover:bg-none normal-case text-2xl font-bold">menuAI</NuxtLink>
         </div>
         <div class="flex-none mr-2">
             <div v-if="$auth.loggedIn" class="dropdown dropdown-end">
@@ -14,11 +14,21 @@
                     </div>
                 </label>
                 <ul tabindex="0"
-                    class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                    class="menu menu-sm dropdown-content mt-3 z-[10000] p-2 shadow bg-base-100 rounded-box w-52">
                     <li>
-                        <a class="justify-between">
-                            Profile
-                        </a>
+                        <NuxtLink to="/" class="justify-between">
+                            Dashboard
+                        </NuxtLink>
+                    </li>
+                    <li>
+                        <NuxtLink to="/menus" class="justify-between">
+                            Mes Menus
+                        </NuxtLink>
+                    </li>
+                    <li>
+                        <NuxtLink to="/account" class="justify-between">
+                            Mon Compte
+                        </NuxtLink>
                     </li>
                     <li>
                         <NuxtLink to="/api/logout" external>

@@ -38,7 +38,7 @@ export default {
             {
                 jenny: {
                     "primary": "#193346",
-                    "secondary": "#ECF6FA",
+                    "secondary": "#FAFDFF",
                     "accent": "#3D97D9",
                     "neutral": "#ECF6FA",
                     "base-100": "#fcfcfd",

@@ -41,10 +41,10 @@
                 <div class="flex justify-between items-center">
                     <h2 class="text-primary font-bold text-2xl">Ton Menu</h2>
                     <div class="actions relative flex flex-row items-center justify-around">
-                        <div class="tooltip" data-tip="copier menu">
+                        <div class="tooltip -z-1" data-tip="copier menu">
                             <PhosphorIconCopy class="hover:cursor-pointer" size="24" @click="copyToClipboard"/>
                         </div>
-                        <div class="tooltip ml-2" data-tip="télecharger en pdf">
+                        <div class="tooltip ml-2 mr-5 -z-1" data-tip="télecharger en pdf">
                             <PhosphorIconDownloadSimple class="hover:cursor-pointer" size="24" @click="saveToPDF"/>
                         </div>
                     </div>

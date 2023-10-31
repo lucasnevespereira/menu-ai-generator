@@ -12,7 +12,7 @@ defineProps({
 
 <template>
     <div class="card p-4 shadow-xl w-full">
-        <div v-if="menu.content" class="tooltip absolute top-2 right-2" data-tip="copier menu">
+        <div v-if="menu.content" class="tooltip  absolute top-2 right-2" data-tip="copier menu">
             <PhosphorIconCopy class="hover:cursor-pointer" size="32" @click="$emit('copy')"/>
         </div>
 
