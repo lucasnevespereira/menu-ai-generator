@@ -1,25 +1,37 @@
 <template>
     <div class="container w-full mx-auto bg-base-100 p-10 rounded-lg">
-        <div class="flex flex-wrap">
+        <div class="flex flex-wrap justify-between">
             <!--Form container-->
-            <div class="form-container w-full md:w-1/2 mb-4 mx-auto">
+            <div class="form-container max-w-lg w-full md:w-1/2 px-4 mb-4">
                 <h2 class="text-primary font-bold text-2xl mb-4">Tes Options</h2>
-                <div class="w-full">
-                    <NumberInput size="md" label="Calories" v-model="formData.maxCalories"
+                <div class="">
+                    <NumberInput input-size="sm" max-width="sm" label="Calories" v-model="formData.maxCalories"
                                  placeholder="0" placeholder-symbol="kcal"/>
                 </div>
                 <div class="flex flex-wrap max-w-full">
-                    <NumberInput size="sm" label="Glucides" v-model="formData.maxCarbs"
+                    <NumberInput input-size="sm" label="Glucides" v-model="formData.maxCarbs"
                                  placeholder="0" placeholder-symbol="%"/>
-                    <NumberInput size="sm" label="Proteines" v-model="formData.maxProteins"
+                    <NumberInput input-size="sm" label="Proteines" v-model="formData.maxProteins"
                                  placeholder="0" placeholder-symbol="%"/>
-                    <NumberInput size="sm" label="Lipides" v-model="formData.maxFats"
+                    <NumberInput input-size="sm" label="Lipides" v-model="formData.maxFats"
                                  placeholder="0" placeholder-symbol="%"/>
                 </div>
-                <div class="w-full">
-                    <SelectInput size="md" label="Régimes" v-model="formData.allergies" placeholder="Allergenes"
-                                 :options="allergyOptions"/>
+
+                <div class="w-full max-w-md mt-4 ">
+                    <MultiSelectInput size="md" label="Régimes" v-model="formData.regimes"
+                                      placeholder="Selectionnez vos régimes"
+                                      :options="regimeOptions"/>
                 </div>
+
+                <div class="w-full max-w-md py-4">
+                    <div class="form-control">
+                        <label class="label cursor-pointer">
+                            <span class="label-text font-light uppercase text-lg tracking-widest">Liste de courses</span>
+                            <input type="checkbox" v-model="formData.wantShoppingList" class="checkbox"/>
+                        </label>
+                    </div>
+                </div>
+
                 <div class="form-control w-full max-w-xs mt-4">
                     <button @click="generateMenu" class="btn btn-primary">Générer</button>
                 </div>
@@ -41,23 +53,24 @@
                     <Loader v-if="isLoading"/>
                     <div v-else-if="menu.content" class="">
                         <div class="title flex flex-col">
-                            <h2 class="text-xl font-semibold mb-2">Menu {{ menu.specs.maxCalories }}kcal</h2>
+                            <h2 class="text-xl font-semibold mb-2">Menu du Jour</h2>
                             <p class="text-sm mb-2 font-semibold">
-                                {{ menu.specs.maxCalories }} calories,
-                                lipides {{ menu.specs.maxFats }}%,
-                                glucides{{ menu.specs.maxCarbs }}%,
-                                proteines {{ menu.specs.maxProteins }}%
+                                {{ menu.specs.maxCalories > 0 && `${menu.specs.maxCalories} calories ` }}
+                                {{ menu.specs.maxFats > 0 && `lipides ${menu.specs.maxFats} % ` }}
+                                {{ menu.specs.maxCarbs > 0 && `glucides ${menu.specs.maxCarbs} % ` }}
+                                {{ menu.specs.maxProteins > 0 && `protéines ${menu.specs.maxProteins} % ` }}
                             </p>
                         </div>
                         <div class="menu-content p-4">
                             <div class="menu-text">
                                 <div v-html="menu.content"></div>
-                                <hr class="m-2">
-                                <div class="flex flex-col">
-                                    <h2 class="text-xl font-semibold mb-2">Liste de Courses</h2>
-                                    <div v-html="menu.shoppingList"></div>
+                                <div v-if="menu.shoppingList">
+                                    <hr class="m-2">
+                                    <div class="flex flex-col">
+                                        <h2 class="text-xl font-semibold mb-2">Liste de Courses</h2>
+                                        <div v-html="menu.shoppingList"></div>
+                                    </div>
                                 </div>
-
                             </div>
 
                         </div>
@@ -77,23 +90,27 @@
 
 <script setup>
 import NumberInput from '@/components/ui/NumberInput.vue';
-import SelectInput from '@/components/ui/SelectInput.vue';
 import Loader from "@/components/ui/Loader.vue";
 import Toast from "@/components/ui/Toast.vue";
 import jsPDF from "jspdf";
 import 'jspdf-autotable';
+import MultiSelectInput from "~/components/ui/MultiSelectInput.vue";
 
 const formData = ref({
     maxCalories: 0,
     maxCarbs: 0,
     maxProteins: 0,
     maxFats: 0,
-    allergies: [],
+    regimes: [],
+    wantShoppingList: false
 });
 
-const allergyOptions = [
-    {label: 'Lactose', value: 'lactose'},
-    {label: 'Gluten', value: 'gluten'},
+const regimeOptions = [
+    {label: 'Vegan', value: 'vegan'},
+    {label: 'Végétarien', value: 'végétarien'},
+    {label: 'Sans Lactose', value: 'sans lactose'},
+    {label: 'Sans Gluten', value: 'sans gluten'},
+    {label: 'Sans Arrachide', value: 'sans arrachide'}
 ];
 
 const isLoading = ref(false);
@@ -179,10 +196,12 @@ const saveToPDF = () => {
     }
 };
 
+console.log(formData.value.regimes)
 
 const generateMenu = async () => {
+    console.log(formData.value)
     isLoading.value = true;
-    const {data} = await useFetch('/api/generate/menutmp', {
+    const {data} = await useFetch('/api/generate/menu', {
         method: 'POST', body: formData.value
     })
     console.log(data.value)
@@ -206,6 +225,7 @@ const generateMenu = async () => {
 }
 
 .menu-card {
+    height: 100vh;
     max-height: 90%;
     overflow-y: scroll;
 }

@@ -1,5 +1,4 @@
 <script setup>
-
 defineProps({
     modelValue: {
         type: Number,
@@ -8,10 +7,14 @@ defineProps({
     label: String,
     placeholder: String,
     placeholderSymbol: String,
-    size: {
+    inputSize: {
         type: String,
-        default: "md"
+        default: "sm"
     },
+    maxWidth: {
+        type: String,
+        default: "sm"
+    }
 })
 </script>
 
@@ -20,16 +23,16 @@ defineProps({
         <label class="label">
             <span class="label-text font-light uppercase text-lg tracking-widest">{{ label }}</span>
         </label>
-        <div :class="['input relative input-ghost flex justify-between items-center', `input-${size}`]">
+        <div :class="['input relative input-ghost flex items-center', `input-${inputSize} max-w-${maxWidth}`]">
             <input
-                    type="number"
-                    :value="modelValue"
-                    @input="$emit('update:modelValue', $event.target.value)"
-                    required
-                    :class="['bg-base-100 mr-2' ]"
-                    :placeholder="placeholder"
+                type="number"
+                :value="modelValue"
+                @input="$emit('update:modelValue', $event.target.value)"
+                required
+                :class="['bg-base-100', 'w-full']"
+                :placeholder="placeholder"
             />
-            <div v-if="placeholderSymbol" class="input-icon ml-2 font-bold bg-white absolute right-2">{{placeholderSymbol}}</div>
+            <div class="input-icon ml-2 text-primary">{{ placeholderSymbol }}</div>
         </div>
     </div>
 </template>

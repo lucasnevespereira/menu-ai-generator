@@ -8,7 +8,6 @@ export default defineEventHandler(async event => {
     const menuContent = await getOpenAICompletion(prompt)
     const menu = extractMenu(menuContent)
     const shoppingList = extractShoppingList(menuContent)
-    console.log("menu", menuContent)
     return {
         menu: menu,
         specs: menuSpecs,

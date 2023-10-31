@@ -24,6 +24,7 @@
   "dependencies": {
     "@tailwindcss/typography": "^0.5.10",
     "jspdf": "^2.5.1",
-    "jspdf-autotable": "^3.7.0"
+    "jspdf-autotable": "^3.7.0",
+    "vue-multiselect": "3.0.0-beta.3"
   }
 }

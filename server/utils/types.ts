@@ -3,5 +3,6 @@ export interface MenuSpecsData {
     maxCarbs: Number,
     maxProteins: Number,
     maxFats: Number,
-    allergies: String,
+    regimes: Array,
+    wantShoppingList: Boolean
 }
