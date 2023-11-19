@@ -1,7 +1,7 @@
 <template>
-    <div class="container w-full mx-auto bg-base-100 p-10 rounded-lg">
+    <div class="container w-full mx-auto bg-base-100 p-5 rounded-lg">
         <div class="flex flex-wrap justify-between">
-            <!--Form container-->
+          <!--Form container-->
             <div class="form-container max-w-lg w-full md:w-1/2 px-4 mb-4">
                 <h2 class="text-primary font-bold text-2xl mb-4">Tes Options</h2>
                 <div class="">
@@ -37,7 +37,7 @@
                 </div>
             </div>
             <!--Menu container-->
-            <div class="menu-container md:w-1/2 sm:max-w-full">
+            <div class="menu-container w-full md:w-1/2 sm:max-w-full">
                 <div class="flex justify-between items-center">
                     <h2 class="text-primary font-bold text-2xl">Ton Menu</h2>
                     <div class="actions relative flex flex-row items-center justify-around">
@@ -94,7 +94,7 @@ import Loader from "@/components/ui/Loader.vue";
 import Toast from "@/components/ui/Toast.vue";
 import jsPDF from "jspdf";
 import 'jspdf-autotable';
-import MultiSelectInput from "~/components/ui/MultiSelectInput.vue";
+import MultiSelectInput from "@/components/ui/MultiSelectInput.vue";
 
 const formData = ref({
     maxCalories: 0,
