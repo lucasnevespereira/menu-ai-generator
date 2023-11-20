@@ -4,13 +4,13 @@ import Landing from "@/components/Landing.vue";
 
 <template>
     <div data-theme="jenny" class="h-screen bg-base-200">
-<!--        <Landing v-if="!$auth.loggedIn" />-->
-        <div>
+       <Landing v-if="!$auth.loggedIn" />
+        <div v-else>
             <Header/>
             <div class="max-w-8xl mx-auto">
                 <NuxtPage/>
             </div>
-<!--            <Footer/>-->
+            <Footer/>
         </div>
     </div>
 </template>
