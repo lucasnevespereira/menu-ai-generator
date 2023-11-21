@@ -42,7 +42,7 @@ defineExpose({
 
 <template>
     <div v-if="visible" class="toast">
-        <div class="alert">
+        <div class="alert bg-base-100 text-center">
             <span>{{ toastMessage }}</span>
         </div>
     </div>

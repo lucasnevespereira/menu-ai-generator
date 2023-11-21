@@ -6,7 +6,7 @@ export default defineEventHandler(async event => {
        "maxCarbs": "30",
        "maxProteins": "20",
        "maxFats": "20",
-       "allergies": "lactose"
+       "allergies": ["lactose", "gluten"]
    }
    const tmpDescription = "1900 calories,lipides 20%,glucides 30%,proteines 20%"
     return {

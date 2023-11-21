@@ -12,6 +12,7 @@
 <!--        </div>-->
 <!--        <p class="text-lg"><span class="font-bold">Nom: </span>{{$auth.user.name}}</p>-->
 <!--        <p class="text-lg"><span class="font-bold">Email: </span>{{$auth.user.email}}</p>-->
+            <p>id: {{ $auth.user.id }}</p>
     </div>
 </template>
 

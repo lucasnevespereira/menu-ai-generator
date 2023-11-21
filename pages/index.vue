@@ -40,8 +40,11 @@
             <div class="menu-container w-full md:w-1/2 sm:max-w-full">
                 <div class="flex justify-between items-center">
                     <h2 class="text-primary font-bold text-2xl">Ton Menu</h2>
-                    <div class="actions relative flex flex-row items-center justify-around">
-                        <div class="tooltip -z-1" data-tip="copier menu">
+                    <div v-if="menu.content" class="actions relative flex flex-row items-center justify-around">
+                        <div  class="tooltip -z-1" data-tip="sauvegarder menu">
+                            <PhosphorIconBookmarkSimple class="hover:cursor-pointer" size="24" @click="saveMenu($auth.user.id)"/>
+                        </div>
+                        <div  class="tooltip ml-2 -z-1" data-tip="copier menu">
                             <PhosphorIconCopy class="hover:cursor-pointer" size="24" @click="copyToClipboard"/>
                         </div>
                         <div class="tooltip ml-2 mr-5 -z-1" data-tip="télecharger en pdf">
@@ -95,6 +98,10 @@ import Toast from "@/components/ui/Toast.vue";
 import jsPDF from "jspdf";
 import 'jspdf-autotable';
 import MultiSelectInput from "@/components/ui/MultiSelectInput.vue";
+
+definePageMeta({
+    middleware: ['auth-logged-in'],
+})
 
 const formData = ref({
     maxCalories: 0,
@@ -196,15 +203,32 @@ const saveToPDF = () => {
     }
 };
 
-console.log(formData.value.regimes)
+const saveMenu = async (userID) => {
+    const data = {
+        content: menu.value.content,
+        shoppingList: menu.value.shoppingList,
+        specs: menu.value.specs,
+        userID: userID
+    };
+    try {
+        const response = await useFetch('/api/save/menu', {
+            method: 'POST',
+            body: data
+        });
+        if (response.data.value.status === 200) {
+            toastRef.value.start("Menu sauvegardé");
+        }
+    } catch (error) {
+        console.error(error);
+        toastRef.value.start('Une erreur lors de la sauvegarde');
+    }
+}
 
 const generateMenu = async () => {
-    console.log(formData.value)
     isLoading.value = true;
-    const {data} = await useFetch('/api/generate/menu', {
+    const {data} = await useFetch('/api/generate/menutmp', {
         method: 'POST', body: formData.value
     })
-    console.log(data.value)
     menu.value.content = data.value.menu
     menu.value.specs = data.value.specs
     menu.value.description = data.value.description
