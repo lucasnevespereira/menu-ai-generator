@@ -38,10 +38,10 @@
             </div>
             <!--Menu container-->
             <div class="menu-container w-full md:w-1/2 sm:max-w-full">
-                <div class="flex justify-between items-center">
+                <div class="flex items-center">
                     <h2 class="text-primary font-bold text-2xl">Ton Menu</h2>
-                    <div v-if="menu.content" class="actions relative flex flex-row items-center justify-around">
-                        <div  class="tooltip -z-1" data-tip="sauvegarder menu">
+                    <div v-if="menu.content" class="actions ml-3 relative flex flex-row items-center justify-around">
+                        <div  class="tooltip" data-tip="sauvegarder menu">
                             <PhosphorIconBookmarkSimple class="hover:cursor-pointer" size="24" @click="saveMenu($auth.user.id)"/>
                         </div>
                         <div  class="tooltip ml-2 -z-1" data-tip="copier menu">
@@ -166,7 +166,7 @@ const saveToPDF = () => {
         pdf.autoTable({
             startY: 20,
             head: [['Repas', 'Contenu']],
-            headStyles: {fillColor: [76, 184, 189]},
+            headStyles: {fillColor: [26, 52, 71]},
             body: lines.map((line, index) => {
                 if (line.startsWith('•')) {
                     // content lines with bullet points
@@ -194,7 +194,7 @@ const saveToPDF = () => {
             pdf.autoTable({
                 startY: 20,
                 head: [['Produit']],
-                headStyles: {fillColor: [76, 184, 189]},
+                headStyles: {fillColor: [26, 52, 71]},
                 body: lines.map(item => [item]),
             });
         }
@@ -226,7 +226,7 @@ const saveMenu = async (userID) => {
 
 const generateMenu = async () => {
     isLoading.value = true;
-    const {data} = await useFetch('/api/generate/menutmp', {
+    const {data} = await useFetch('/api/generate/menu', {
         method: 'POST', body: formData.value
     })
     menu.value.content = data.value.menu

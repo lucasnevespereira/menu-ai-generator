@@ -1,14 +1,12 @@
 
 export default defineEventHandler(async event => {
     try {
-        const body = await readRawBody(event);
+        const query = getQuery(event);
+        const userID = query.userID
+        
         const apiUrl = process.env.NITRO_MENU_AI_SERVICE_URL;
-        const response = await fetch(`${apiUrl}/menus`, {
-            method: "POST",
-            body: body,
-            headers: {
-                'Content-Type': 'application/json'
-            }
+        const response = await fetch(`${apiUrl}/menus/${userID}`, {
+            method: "GET",
         });
 
         if (!response.ok) {
@@ -20,7 +18,7 @@ export default defineEventHandler(async event => {
     } catch (error) {
         throw createError({
             statusCode: 500,
-            message: 'Failed to save menu'
+            message: 'Failed to fetch menus'
         });
     }
 });

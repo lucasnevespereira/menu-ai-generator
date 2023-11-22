@@ -6,7 +6,7 @@
         <div class="flex-1">
             <NuxtLink to="/" class="btn btn-ghost hover:bg-none normal-case text-2xl font-bold">menuAI</NuxtLink>
         </div>
-        <div class="flex-none mr-2">
+        <div class="flex-none mr-2 user-menu">
         <div v-if="$auth.loggedIn" class="dropdown dropdown-end">
               <label tabindex="0" class="btn btn-ghost btn-circle avatar w-14 h-14">
                     <div class="w-14 h-14 rounded-full">
@@ -45,5 +45,7 @@
 </template>
 
 <style scoped>
-
+.user-menu {
+    z-index: 1000;
+}
 </style>
