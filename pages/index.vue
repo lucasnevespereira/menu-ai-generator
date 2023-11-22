@@ -99,10 +99,6 @@ import jsPDF from "jspdf";
 import 'jspdf-autotable';
 import MultiSelectInput from "@/components/ui/MultiSelectInput.vue";
 
-definePageMeta({
-    middleware: ['auth-logged-in'],
-})
-
 const formData = ref({
     maxCalories: 0,
     maxCarbs: 0,
