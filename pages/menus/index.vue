@@ -70,8 +70,6 @@ const truncateContent = (content) => {
 
   return truncatedContent + (replacedContent.length > 100 ? '...' : ''); // Add ellipsis if content was truncated
 }
-
-
 </script>
 
 <template>

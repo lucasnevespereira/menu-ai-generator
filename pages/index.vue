@@ -3,19 +3,28 @@
         <div class="flex flex-wrap justify-between">
           <!--Form container-->
             <div class="form-container max-w-lg w-full md:w-1/2 px-4 mb-4">
+              <div class="form-header flex justify-between align-middle items-center">
                 <h2 class="text-primary font-bold text-2xl mb-4">Tes Options</h2>
+              </div>
                 <div class="">
                     <NumberInput input-size="sm" max-width="sm" label="Calories" v-model="formData.maxCalories"
                                  placeholder="0" placeholder-symbol="kcal"/>
                 </div>
-                <div class="flex flex-wrap max-w-full">
+                <div class="flex flex-wrap items-center align-middle max-w-full">
                     <NumberInput input-size="sm" label="Glucides" v-model="formData.maxCarbs"
                                  placeholder="0" placeholder-symbol="%"/>
                     <NumberInput input-size="sm" label="Proteines" v-model="formData.maxProteins"
                                  placeholder="0" placeholder-symbol="%"/>
                     <NumberInput input-size="sm" label="Lipides" v-model="formData.maxFats"
                                  placeholder="0" placeholder-symbol="%"/>
-                </div>
+
+                    <div class="form-control mt-5 flex justify-center items-center ml-2">
+                      <label class="label cursor-pointer">
+                        <span class="label-text font-light uppercase text-lg tracking-widest">Liste de courses</span>
+                        <input type="checkbox" v-model="formData.wantShoppingList" class="checkbox"/>
+                      </label>
+                    </div>
+                  </div>
 
                 <div class="w-full max-w-md mt-4 ">
                     <MultiSelectInput size="md" label="Régimes" v-model="formData.regimes"
@@ -23,14 +32,14 @@
                                       :options="regimeOptions"/>
                 </div>
 
-                <div class="w-full max-w-md py-4">
-                    <div class="form-control">
-                        <label class="label cursor-pointer">
-                            <span class="label-text font-light uppercase text-lg tracking-widest">Liste de courses</span>
-                            <input type="checkbox" v-model="formData.wantShoppingList" class="checkbox"/>
-                        </label>
-                    </div>
-                </div>
+<!--                <div class="w-full max-w-md py-4">-->
+<!--                    <div class="form-control">-->
+<!--                        <label class="label cursor-pointer">-->
+<!--                            <span class="label-text font-light uppercase text-lg tracking-widest">Liste de courses</span>-->
+<!--                            <input type="checkbox" v-model="formData.wantShoppingList" class="checkbox"/>-->
+<!--                        </label>-->
+<!--                    </div>-->
+<!--                </div>-->
 
                 <div class="form-control w-full max-w-xs mt-4">
                     <button @click="generateMenu" class="btn btn-primary">Générer</button>
@@ -207,10 +216,11 @@ const saveMenu = async (userID) => {
         userID: userID
     };
     try {
-        const response = await useFetch('/api/save/menu', {
+        const response = await useFetch('/api/menus/save', {
             method: 'POST',
             body: data
         });
+        console.log(response.data)
         if (response.data.value.status === 200) {
             toastRef.value.start("Menu sauvegardé");
         }
@@ -222,7 +232,7 @@ const saveMenu = async (userID) => {
 
 const generateMenu = async () => {
     isLoading.value = true;
-    const {data} = await useFetch('/api/generate/menu', {
+    const {data} = await useFetch('/api/menus/generate', {
         method: 'POST', body: formData.value
     })
     menu.value.content = data.value.menu

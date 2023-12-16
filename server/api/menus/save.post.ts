@@ -11,13 +11,9 @@ export default defineEventHandler(async event => {
             }
         });
 
-        if (!response.ok) {
-            throw new Error(`Request failed with status: ${response.status}`);
-        }
-
-        const responseData = await response.json();
-        return responseData;
-    } catch (error) {
+        return await response.json();
+    } catch (err) {
+        console.error(err)
         throw createError({
             statusCode: 500,
             message: 'Failed to save menu'

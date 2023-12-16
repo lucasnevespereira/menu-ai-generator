@@ -2,7 +2,7 @@
 </script>
 
 <template>
-    <div class="navbar sticky p-8 items-center">
+    <div class="navbar sticky p-3 items-center">
         <div class="flex-1">
             <NuxtLink to="/" class="btn btn-ghost hover:bg-none normal-case text-2xl font-bold">menuAI</NuxtLink>
         </div>
