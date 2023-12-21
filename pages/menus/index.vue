@@ -83,13 +83,13 @@ const deleteMenu = async (menuID) => {
     if (response.status === 200) {
       toastRef.value.start("Menu Supprimé");
     }
+    await refreshNuxtData()
   } catch (error) {
     console.error(error);
     toastRef.value.start('Une erreur lors de la suppresion');
   } finally {
     menuIDtoDelete.value = null
     isDeleting.value = false
-    await refreshNuxtData()
   }
 }
 
