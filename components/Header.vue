@@ -10,7 +10,7 @@
         <div v-if="$auth.loggedIn" class="dropdown dropdown-end">
               <label tabindex="0" class="btn btn-ghost btn-circle avatar w-14 h-14">
                     <div class="w-14 h-14 rounded-full">
-                        <img :src="$auth.user.picture"/>
+                        <img :src="$auth.user.picture ? $auth.user.picture : `https://ui-avatars.com/api/?name=${$auth.user.name}`" alt="user picture"/>
                     </div>
                 </label>
     <ul tabindex="0"

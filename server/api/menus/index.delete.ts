@@ -1,12 +1,11 @@
-
 export default defineEventHandler(async event => {
     try {
         const query = getQuery(event);
-        const userID = query.userID
-        
+        const menuID = query.userID
+
         const apiUrl = process.env.NITRO_MENU_AI_SERVICE_URL;
-        const response = await fetch(`${apiUrl}/menus/${userID}`, {
-            method: "GET",
+        const response = await fetch(`${apiUrl}/menus/${menuID}`, {
+            method: "DELETE",
         });
 
         if (!response.ok) {
@@ -17,7 +16,7 @@ export default defineEventHandler(async event => {
     } catch (error) {
         throw createError({
             statusCode: 500,
-            message: 'Failed to fetch menus'
+            message: 'Failed to delete menu'
         });
     }
 });
