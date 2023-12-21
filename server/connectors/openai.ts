@@ -4,7 +4,6 @@ export const getOpenAICompletion = async (prompt: string) => {
         model: 'gpt-3.5-turbo',
         messages: [{role: 'user', content: prompt}],
     };
-
     try {
         const response = await fetch(apiEndpoint, {
             method: 'POST',

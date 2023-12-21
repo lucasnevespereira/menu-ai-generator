@@ -231,6 +231,7 @@ const saveMenu = async (userID) => {
 }
 
 const generateMenu = async () => {
+  console.log("formData", formData.value)
   isLoading.value = true;
   const {data} = await useFetch('/api/menus/generate', {
     method: 'POST', body: formData.value
@@ -255,10 +256,10 @@ const generateMenu = async () => {
 }
 
 .menu-card {
-  height: 100vh;
-  max-height: 90%;
+  height: 70vh;
+  max-height: 100%;
   overflow-y: scroll;
-  z-index: -1;
+  z-index: 0;
 }
 
 </style>
