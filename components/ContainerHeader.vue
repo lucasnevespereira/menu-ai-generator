@@ -15,7 +15,7 @@ const drawer = useDrawerStore()
 <template>
   <div class="navbar sticky py-8 px-4 items-center border-b-2 border-b-accent-content/10">
     <div class="flex-1 flex items-center align-middle">
-      <button class="btn-ghost rounded mr-2 " @click="drawer.toggleOpen()">
+      <button class="btn-ghost rounded mr-2 lg:hidden" @click="drawer.toggleOpen()">
         <PhosphorIconList size="24"/>
       </button>
       <p class="text-2xl font-bold">{{label}}</p>

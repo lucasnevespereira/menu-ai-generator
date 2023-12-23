@@ -10,7 +10,7 @@ const drawer = useDrawerStore()
     <div v-else>
       <div class="drawer drawer-open">
         <input id="sidebar-drawer" type="checkbox" class="drawer-toggle" :checked="drawer.open">
-        <div class="drawer-content flex flex-col h-screen overflow-scroll">
+        <div class="drawer-content flex flex-col h-screen overflow-scroll lg:overflow-hidden">
           <NuxtPage/>
         </div>
         <div v-if="drawer.open" class="drawer-side h-full overflow-hidden bg-secondary">
