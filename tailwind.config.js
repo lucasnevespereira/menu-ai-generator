@@ -47,6 +47,28 @@ export default {
                     "warning": "#f4dd66",
                     "error": "#ec7484",
                 },
+                jennyDark: {
+                    "primary": "#FAFDFF",
+                    "secondary": "#193346",
+                    "accent": "#0c2b3a",
+                    "neutral": "#193346",
+                    "base-100": "#1e5a79",
+                    "info": "#0c2b3a",
+                    "success": "#1edcbf",
+                    "warning": "#f4dd66",
+                    "error": "#ec7484"
+                },
+                jennyDarkLite: {
+                    "primary": "#FAFDFF",
+                    "secondary": "#151531",
+                    "accent": "#7440F8",
+                    "neutral": "#7440F8",
+                    "base-100": "#252549",
+                    "info": "#7440F8",
+                    "success": "#33A580",
+                    "warning": "#B5B54A",
+                    "error": "#A3757D"
+                }
             }
         ],
     },

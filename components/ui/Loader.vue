@@ -1,20 +1,20 @@
 <script setup lang="ts">
 defineProps({
-    size: {
-        type: String,
-        default: 'lg',
-    },
-    additionalClasses: String,
+  color: {
+    type: String,
+    default: 'accent'
+  },
+  additionalClasses: String,
 });
 </script>
 
 <template>
-    <div class="h-full w-full flex justify-center items-center flex-col">
+  <div class="h-full w-full flex justify-center items-center flex-col p-10">
         <span :class="[
-        'loading loading-bars',
-        `loading-${size}`,
+           `text-${color}`,
+        `loading loading-spinner loading-lg`,
         additionalClasses
-      ]"></span>
-        <p class="font-semibold mt-2">Géneration du menu en cours</p>
-    </div>
+      ]">
+        </span>
+  </div>
 </template>

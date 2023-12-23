@@ -1,4 +1,4 @@
-import {MenuSpecsData} from "~/server/utils/types";
+import {MenuFormData} from "@/server/utils/types";
 
 // export function extractMenu(menuContent: String) {
 //     const startIdx = menuContent.indexOf('MENUSTART');
@@ -51,7 +51,7 @@ export function extractShoppingList(menuContent: String) {
     return '';
 }
 
-export function formatMenuSpecs(data: MenuSpecsData) {
+export function formatMenuSpecs(data: MenuFormData) {
     return `${data.maxCalories} calories,
                             lipides ${data.maxFats}%,
                             glucides ${data.maxCarbs}%,
