@@ -1,76 +1,31 @@
-# Nuxt 3 Minimal Starter
+# Menu AI Generator
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+- Frontend with [Nuxt 3](https://nuxt.com/docs/getting-started/introduction).
 
-## Setup
+- Backend with Golang [menu-ai-service](https://github.com/lucasnevespereira/menu-ai-service)
 
-Make sure to install the dependencies:
+---
 
-```bash
-# npm
-npm install
+## 📖 Table of Contents
+- [📖 Table of Contents](#-table-of-contents)
+- [📍 Overview](#-overview)
+- [📦 Features](#-features)
+---
 
-# pnpm
-pnpm install
 
-# yarn
-yarn install
+## 📍 Overview
 
-# bun
-bun install
-```
+Application that generates daily nutrional menus trough AI and based on some preferences.
 
-## Development Server
+---
 
-Start the development server on `http://localhost:3000`:
+## 📦 Features
 
-```bash
-# npm
-npm run dev
+- Generate a menu based on preferences:
+  - Language
+  - Limit of daily Calories, Fats, Carbs and Proteins
+  - List of diets or allergies
 
-# pnpm
-pnpm run dev
+- Generate a shopping list to go with you menu
 
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
-# menu-ai-generator
+- Save, Download and copy menus
