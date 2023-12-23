@@ -12,22 +12,22 @@ export function buildAIPrompt(data: MenuFormData) {
 
 
 function getFrenchPrompt(data: MenuFormData) {
-    let prompt = `Je souhaite concevoir un plan nutritionnel pour une journée, en tenant compte des spécifications suivantes :`;
+    let prompt = `Tu es un diététicien expert avec au moins 20 ans d'expérience. Vous souhaitez créer un menu nutritionnel quotidien pour un client, en tenant compte des spécifications suivantes :`;
 
     if (data.maxCalories > 0) {
         prompt += `Limite de calories par jour : ${data.maxCalories} calories\n`;
     }
 
     if (data.maxCarbs > 0) {
-        prompt += `Limite de glucides par jour : ${data.maxCarbs} grammes (${data.maxCarbs}% des calories)\n`;
+        prompt += `Limite de glucides par jour : ${data.maxCarbs} % (${data.maxCarbs}% des calories)\n`;
     }
 
     if (data.maxProteins > 0) {
-        prompt += `Limite de protéines par jour : ${data.maxProteins} grammes (${data.maxProteins}% des calories)\n`;
+        prompt += `Limite de protéines par jour : ${data.maxProteins} % (${data.maxProteins}% des calories)\n`;
     }
 
     if (data.maxFats > 0) {
-        prompt += `Limite de lipides par jour : ${data.maxFats} grammes (${data.maxFats}% des calories)\n`;
+        prompt += `Limite de lipides par jour : ${data.maxFats} % (${data.maxFats}% des calories)\n`;
     }
 
     if (data.regimes && data.regimes.length > 0) {
@@ -88,22 +88,22 @@ Vous pouvez respecter le format suivant:
 }
 
 function getEnglishPrompt(data: MenuFormData) {
-    let prompt = `I want to create a nutritional plan for a day, taking into account the following specifications:`;
+    let prompt = `You are an expert dietitian with at least 20 years of experience. You want to create a daily nutritional menu for a client, taking into account the following specifications:`;
 
     if (data.maxCalories > 0) {
         prompt += `Daily calorie limit: ${data.maxCalories} calories\n`;
     }
 
     if (data.maxCarbs > 0) {
-        prompt += `Daily carbohydrate limit: ${data.maxCarbs} grams (${data.maxCarbs}% of calories)\n`;
+        prompt += `Daily carbohydrate limit: ${data.maxCarbs} % (${data.maxCarbs}% of calories)\n`;
     }
 
     if (data.maxProteins > 0) {
-        prompt += `Daily protein limit: ${data.maxProteins} grams (${data.maxProteins}% of calories)\n`;
+        prompt += `Daily protein limit: ${data.maxProteins} % (${data.maxProteins}% of calories)\n`;
     }
 
     if (data.maxFats > 0) {
-        prompt += `Daily fat limit: ${data.maxFats} grams (${data.maxFats}% of calories)\n`;
+        prompt += `Daily fat limit: ${data.maxFats} % (${data.maxFats}% of calories)\n`;
     }
 
     if (data.regimes && data.regimes.length > 0) {
@@ -112,7 +112,7 @@ function getEnglishPrompt(data: MenuFormData) {
         prompt += `Dietary preferences: ${regimesList}\n`;
     }
 
-    prompt += ` 
+    prompt += `     
     Please suggest typical foods for each meal:
     
     Breakfast (typical breakfast meal)
