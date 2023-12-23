@@ -23,7 +23,7 @@ defineProps({
         <label class="label">
             <span class="label-text font-light uppercase text-lg tracking-widest">{{ label }}</span>
         </label>
-        <div :class="['input relative input-ghost flex items-center', `input-${inputSize} max-w-${maxWidth}`]">
+        <div :class="['input relative flex items-center', `input-${inputSize} max-w-${maxWidth}`]">
             <input
                 type="number"
                 :value="modelValue"

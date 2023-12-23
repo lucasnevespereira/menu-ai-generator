@@ -1,18 +1,19 @@
 <script setup lang="ts">
+import { useAppStore } from '@/stores/app'
+const store = useAppStore()
+defineProps({
+  label: {
+    type: String,
+    required: true,
+    default: "MenuAI Generator"
+  }
+})
 </script>
 
 <template>
-  <div class="navbar sticky p-3 items-center">
+  <div class="navbar sticky py-6 px-4 items-center border-b-2 border-b-accent-content/10">
     <div class="flex-1 flex items-center align-middle">
-      <NuxtLink to="/" class="btn btn-ghost hover:bg-none normal-case text-2xl font-bold">menuAI</NuxtLink>
-      <div class="flex ml-2 items-center">
-        <NuxtLink to="/" class="btn btn-sm btn-link justify-between">
-          Dashboard
-        </NuxtLink>
-        <NuxtLink to="/menus" class="btn btn-sm btn-link justify-between">
-          Mes Menus
-        </NuxtLink>
-      </div>
+      <p class="text-2xl font-bold">{{label}}</p>
     </div>
     <div class="flex-none mr-2 user-menu">
       <div v-if="$auth.loggedIn" class="dropdown dropdown-end">
@@ -26,19 +27,11 @@
             class="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
           <li>
             <NuxtLink to="/account" class="justify-between">
-              Mon Compte
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink to="/api/logout" external>
-              Logout
+              Account
             </NuxtLink>
           </li>
         </ul>
       </div>
-      <NuxtLink v-else to="/api/login" external>
-        Se Connecter
-      </NuxtLink>
     </div>
   </div>
 </template>

@@ -1,8 +1,9 @@
-export interface MenuSpecsData {
-    maxCalories: Number,
-    maxCarbs: Number,
-    maxProteins: Number,
-    maxFats: Number,
-    regimes: Array,
+export interface MenuFormData {
+    lang: string,
+    maxCalories: number,
+    maxCarbs: number,
+    maxProteins: number,
+    maxFats: number,
+    regimes: object[],
     wantShoppingList: Boolean
 }
