@@ -60,8 +60,8 @@ const truncateContent = (content) => {
 </script>
 
 <template>
-  <ContainerHeader label="Saved Menus"/>
-  <div class="container w-full p-10 overflow-y-auto rounded-lg">
+  <ContainerHeader label="Menus"/>
+  <div class="container w-full mx-auto p-10 overflow-y-auto rounded-lg">
     <div v-if="!menus" class="rounded-lg bg-base-100 shadow-2xl mb-4 p-4">
       You don't have any menus saved.
     </div>

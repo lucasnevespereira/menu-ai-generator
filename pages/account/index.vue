@@ -4,7 +4,7 @@ import ContainerHeader from "@/components/ContainerHeader.vue";
 </script>
 
 <template>
-  <ContainerHeader label="My Account" />
+  <ContainerHeader label="Account" />
     <div class="container w-full mx-auto p-10 rounded-lg">
         <div class="avatar my-4">
             <div class="w-24 rounded-xl">

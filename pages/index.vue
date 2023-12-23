@@ -136,10 +136,10 @@ const generateMenu = async () => {
 </script>
 
 <template>
-  <ContainerHeader label="Daily Menu Generator"/>
-  <div class="container w-full h-full flex">
+  <ContainerHeader label="Dashboard"/>
+  <div class="container w-full h-full mx-auto flex flex-col lg:flex-row">
     <!--Form container-->
-    <div class="form-container w-1/2 p-4">
+    <div class="form-container w-full lg:w-1/2 p-4">
       <div class="form-header flex align-middle items-center">
       </div>
       <div class="w-full">
@@ -178,9 +178,9 @@ const generateMenu = async () => {
       </div>
     </div>
     <!--Divider-->
-    <div class="border-2 border-accent-content/10"></div>
+    <div class="border-2 border-accent-content/10 mx-3"></div>
     <!--Menu container-->
-    <div class="menu-container w-1/2 p-4">
+    <div class="menu-container w-full lg:w-1/2 lg:p-4 py-6 px-4">
       <div class="card menu-card bg-base-100 p-4 shadow-xl w-full no-scrollbar">
         <Loader size="lg" v-if="isLoading"/>
         <div v-else-if="menu.content">
@@ -211,8 +211,7 @@ const generateMenu = async () => {
           </div>
         </div>
       </div>
-      <div class="actions flex items-center">
-        <div class="actions mt-3 space-x-3 relative flex flex-row items-center justify-around">
+      <div class="flex items-center sm:pb-4 mt-3 gap-5 flex-row flex-wrap">
           <button class="btn btn-secondary" :disabled="!menu.content" @click="saveMenu($auth.user.id)">
             <PhosphorIconBookmarkSimple class="hover:cursor-pointer" size="24"/>
             Save Menu
@@ -227,7 +226,6 @@ const generateMenu = async () => {
             Download
           </button>
         </div>
-      </div>
     </div>
     <Toast ref="toastRef"/>
   </div>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useAppStore } from '@/stores/app'
+import {useDrawerStore} from "@/stores/drawer";
 const store = useAppStore()
 defineProps({
   label: {
@@ -8,11 +9,15 @@ defineProps({
     default: "MenuAI Generator"
   }
 })
+const drawer = useDrawerStore()
 </script>
 
 <template>
-  <div class="navbar sticky py-6 px-4 items-center border-b-2 border-b-accent-content/10">
+  <div class="navbar sticky py-8 px-4 items-center border-b-2 border-b-accent-content/10">
     <div class="flex-1 flex items-center align-middle">
+      <button class="btn-ghost rounded mr-2 " @click="drawer.toggleOpen()">
+        <PhosphorIconList size="24"/>
+      </button>
       <p class="text-2xl font-bold">{{label}}</p>
     </div>
     <div class="flex-none mr-2 user-menu">

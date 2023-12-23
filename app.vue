@@ -1,19 +1,20 @@
 <script setup lang="ts">
 import Landing from "@/components/Landing.vue";
+import {useDrawerStore} from "@/stores/drawer";
+const drawer = useDrawerStore()
 </script>
 
 <template>
-  <div data-theme="jennyDarkLite" class="min-h-full bg-base-200">
+  <div data-theme="jennyDarkLite" class="h-screen bg-base-200">
     <Landing v-if="!$auth.loggedIn"/>
     <div v-else>
       <div class="drawer drawer-open">
-        <input id="sidebar-drawer" type="checkbox" class="drawer-toggle"/>
-        <div class="drawer-content flex flex-col">
+        <input id="sidebar-drawer" type="checkbox" class="drawer-toggle" :checked="drawer.open">
+        <div class="drawer-content flex flex-col h-screen overflow-scroll">
           <NuxtPage/>
         </div>
-        <div class="drawer-side h-screen overflow-hidden bg-secondary">
-          <label for="sidebar-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-          <div class="flex w-60 min-h-full flex-col py-10 px-2">
+        <div v-if="drawer.open" class="drawer-side h-full overflow-hidden bg-secondary">
+          <div class="flex w-40 lg:w-60 min-h-full flex-col py-10 px-2">
             <div class="logo">
               <NuxtLink to="/" class="hover:bg-none normal-case text-2xl font-bold ml-5">menuAI</NuxtLink>
             </div>
