@@ -39,9 +39,9 @@ function getFrenchPrompt(data: MenuFormData) {
     prompt += ` 
     Veuillez proposer des aliments typiques pour chaque repas:
     
-    Petit-déjeuner (aliments typiques du petit-déjeuner)
-    Déjeuner (aliments typiques du déjeuner)
-    Dîner (aliments typiques du dîner)
+    Petit-déjeuner (petit-déjeuner typique)
+    Déjeuner (déjeuner typique)
+    Dîner (dîner typique)
     Collations (aliments typiques pour les collations) 
     
     Veuillez spécifier les quantités à utiliser (en grammes) pour chaque ingrédient dans le menu nutritionnel, de la manière suivante :
@@ -115,9 +115,9 @@ function getEnglishPrompt(data: MenuFormData) {
     prompt += ` 
     Please suggest typical foods for each meal:
     
-    Breakfast (typical breakfast foods)
-    Lunch (typical lunch foods)
-    Dinner (typical dinner foods)
+    Breakfast (typical breakfast meal)
+    Lunch (typical lunch meal)
+    Dinner (typical dinner meal)
     Snacks (typical snacks) 
     
     Please specify the quantities to use (in grams) for each ingredient in the nutritional menu, in the following format:
