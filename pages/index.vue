@@ -235,7 +235,7 @@ const generateMenu = async () => {
 <style scoped>
 
 .menu-container {
-  max-height: 70vh;
+  max-height: 80vh;
 }
 
 .menu-text {
@@ -244,7 +244,7 @@ const generateMenu = async () => {
 }
 
 .menu-card {
-  height: 70vh;
+  height: 90vh;
   max-height: 100%;
   overflow-y: scroll;
   z-index: 0;
