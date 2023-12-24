@@ -3,6 +3,7 @@ import Loader from "@/components/ui/Loader.vue";
 import {useAppStore} from '@/stores/app'
 import ContainerHeader from "@/components/ContainerHeader.vue";
 import {SAVE_TO_PDF} from "@/utils/pdf.js";
+import ConfirmationModal from "~/components/ui/ConfirmationModal.vue";
 
 definePageMeta({
   middleware: ['auth-logged-in'],
@@ -19,7 +20,6 @@ const {data: api} = await useFetch(`/api/menus?userID=${user.id}`)
 const menus = ref(api)
 
 const confirmDelete = ref(null)
-const menuIDtoDelete = ref(null)
 const isDeleting = ref(false)
 
 const downloadMenu = (menu) => {
@@ -27,14 +27,20 @@ const downloadMenu = (menu) => {
 }
 
 const openConfirmDelete = (menuID) => {
-  menuIDtoDelete.value = menuID
-  confirmDelete.value.showModal()
+  localStorage.setItem('menuIDtoDelete', menuID)
+  confirmDelete.value.open()
 }
 
-const deleteMenu = async (menuID) => {
+const handleCancel = () => {
+  localStorage.removeItem('menuIDtoDelete')
+}
+
+
+const deleteMenu = async () => {
   isDeleting.value = true
   try {
-    const response = await useFetch(`/api/menus?userID=${menuID}`, {
+    const menuID = localStorage.getItem('menuIDtoDelete')
+    const response = await useFetch(`/api/menus?id=${menuID}`, {
       method: 'DELETE',
     });
     if (response.status === 200) {
@@ -45,7 +51,7 @@ const deleteMenu = async (menuID) => {
     console.error(error);
     toastRef.value.start('Something went wrong while deleting');
   } finally {
-    menuIDtoDelete.value = null
+    localStorage.removeItem('menuIDtoDelete')
     isDeleting.value = false
   }
 }
@@ -81,21 +87,12 @@ const truncateContent = (content) => {
           <PhosphorIconTrashSimple class="hover:cursor-pointer" size="22"/>
         </button>
       </div>
-
-
     </div>
-    <dialog ref="confirmDelete" class="modal modal-bottom sm:modal-middle">
-      <div class="modal-box">
-        <h3 class="font-bold text-lg">Delete Menu</h3>
-        <p class="py-4">Are you certain to delete this menu?</p>
-        <div class="modal-action">
-          <form method="dialog">
-            <button class="btn btn-ghost">Cancel</button>
-            <button class="btn btn-error btn-outline ml-2" @click="deleteMenu(menuIDtoDelete)">Delete</button>
-          </form>
-        </div>
-      </div>
-    </dialog>
+    <ConfirmationModal ref="confirmDelete" title="Delete Menu"
+                       message="Are you certain to delete this menu?"
+                       @on-confirm="deleteMenu" @on-cancel="handleCancel"></ConfirmationModal>
+
+
   </div>
 </template>
 

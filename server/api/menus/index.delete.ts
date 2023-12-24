@@ -1,7 +1,7 @@
 export default defineEventHandler(async event => {
     try {
         const query = getQuery(event);
-        const menuID = query.userID
+        const menuID = query.id
 
         const apiUrl = process.env.NITRO_MENU_AI_SERVICE_URL;
         const response = await fetch(`${apiUrl}/menus/${menuID}`, {
