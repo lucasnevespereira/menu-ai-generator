@@ -1,4 +1,4 @@
-import {MenuFormData} from "@/server/utils/types";
+import {MenuFormData} from "@/types/menu";
 
 // export function extractMenu(menuContent: String) {
 //     const startIdx = menuContent.indexOf('MENUSTART');

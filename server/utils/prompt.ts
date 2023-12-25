@@ -1,4 +1,4 @@
-import {MenuFormData} from "@/server/utils/types";
+import {MenuFormData} from "@/types/menu";
 import {Lang} from "@/types/enum";
 
 
