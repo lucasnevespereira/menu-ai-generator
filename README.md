@@ -1,6 +1,6 @@
 # Menu AI Generator
 
-- Frontend with [Nuxt 3](https://nuxt.com/docs/getting-started/introduction).
+- Frontend with [Nuxt 3](https://nuxt.com/docs/getting-started/introduction)
 
 - Backend with Golang [menu-ai-service](https://github.com/lucasnevespereira/menu-ai-service)
 
