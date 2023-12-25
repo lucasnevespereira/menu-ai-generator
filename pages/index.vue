@@ -4,10 +4,11 @@ import Loader from "@/components/ui/Loader.vue";
 import Toast from "@/components/ui/Toast.vue";
 import MultiSelectInput from "@/components/ui/MultiSelectInput.vue";
 import {useAppStore} from "@/stores/app";
-import ContainerHeader from "~/components/ContainerHeader.vue";
-import SelectInput from "~/components/ui/SelectInput.vue";
+import ContainerHeader from "@/components/ContainerHeader.vue";
+import SelectInput from "@/components/ui/SelectInput.vue";
 import {Lang} from "@/types/enum";
 import {SAVE_TO_PDF} from "@/utils/pdf.js";
+import {COPY_TO_CLIPBOARD} from "@/utils/copy";
 
 const store = useAppStore()
 store.setPageName("Dashboard")
@@ -79,24 +80,17 @@ const getMenuDescription = computed(() => {
 
 const toastRef = ref(null);
 
-const copyToClipboard = () => {
-  const menuContent = menu.value.content;
-  if (menuContent) {
-    const tempElement = document.createElement('div');
-    tempElement.innerHTML = menuContent;
-    const plainText = tempElement.textContent;
-
-    const textArea = document.createElement('textarea');
-    textArea.value = plainText;
-    document.body.appendChild(textArea);
-    textArea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textArea);
+const copyMenu = (menu) => {
+  if (menu.content) {
+    const menuContentTitle = Lang.FR ? 'Menu du jour' : 'Daily Menu'
+    const menuShoppingListTitle = Lang.FR ? 'Liste de courses' : 'Shopping List'
+    const content = menu.shoppingList ?
+        `${menuContentTitle} \n ${menu.content} \n\n ${menuShoppingListTitle} \n ${menu.shoppingList}`
+        : `${menuShoppingListTitle} \n ${menu.content}`;
+    COPY_TO_CLIPBOARD(content);
+    toastRef.value.start('Menu Copied');
   }
-
-  toastRef.value.start('Menu Content Copied');
 }
-
 const saveToPDF = () => {
   SAVE_TO_PDF(menu.value)
 };
@@ -185,7 +179,7 @@ const generateMenu = async () => {
         <Loader size="lg" v-if="isLoading"/>
         <div v-else-if="menu.content">
           <div class="title flex flex-col">
-            <h2 class="text-xl font-semibold mb-2">
+            <h2 class="text-xl font-bold mb-2">
               {{ menu.specs && menu.specs.lang === Lang.FR ? 'Menu du Jour' : 'Daily Menu' }}</h2>
             <p v-if="menu.specs" class="text-sm mb-2 font-semibold">
               {{ getMenuDescription }}
@@ -212,20 +206,20 @@ const generateMenu = async () => {
         </div>
       </div>
       <div class="flex items-center sm:pb-4 mt-3 gap-5 flex-row flex-wrap">
-          <button class="btn btn-secondary" :disabled="!menu.content" @click="saveMenu($auth.user.id)">
-            <PhosphorIconBookmarkSimple class="hover:cursor-pointer" size="24"/>
-            Save Menu
-          </button>
-          <button class="btn btn-secondary flex" :disabled="!menu.content" @click="copyToClipboard">
-            <PhosphorIconCopy class="hover:cursor-pointer" size="24"/>
-            Copy Menu
-          </button>
+        <button class="btn btn-secondary" :disabled="!menu.content" @click="saveMenu($auth.user.id)">
+          <PhosphorIconBookmarkSimple class="hover:cursor-pointer" size="24"/>
+          Save Menu
+        </button>
+        <button class="btn btn-secondary flex" :disabled="!menu.content" @click="copyMenu">
+          <PhosphorIconCopy class="hover:cursor-pointer" size="24"/>
+          Copy Menu
+        </button>
 
-          <button class="btn btn-secondary flex" :disabled="!menu.content" @click="saveToPDF">
-            <PhosphorIconDownloadSimple class="hover:cursor-pointer" size="24"/>
-            Download
-          </button>
-        </div>
+        <button class="btn btn-secondary flex" :disabled="!menu.content" @click="saveToPDF">
+          <PhosphorIconDownloadSimple class="hover:cursor-pointer" size="24"/>
+          Download
+        </button>
+      </div>
     </div>
     <Toast ref="toastRef"/>
   </div>

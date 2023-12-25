@@ -3,18 +3,23 @@ export default defineEventHandler(async event => {
         const query = getQuery(event);
         const userID = query.id
         const accessToken = query.token
-        const apiUrl = process.env.NUXT_KINDE_AUTH_DOMAIN;
+        const authApiUrl = process.env.NUXT_KINDE_AUTH_DOMAIN;
+        const apiUrl = process.env.NITRO_MENU_AI_SERVICE_URL
         const headers = {
             'Accept': 'application/json',
             'Authorization': `Bearer ${accessToken}`
         };
-        const response = await fetch(`${apiUrl}/api/v1/user?id=${userID}`, {
+        const response = await fetch(`${authApiUrl}/api/v1/user?id=${userID}`, {
             method: 'DELETE',
             headers: headers
         })
         if (response.status === 200) {
-            console.log("deleting user menus...")
-            //TODO: call backend to delete all menus of user
+            const deleteUserMenusResponse = await fetch(`${apiUrl}/menus/user/${userID}`, {
+                method: 'DELETE',
+            })
+            if (!deleteUserMenusResponse.ok) {
+                console.error('could not delete menus for user with id', userID)
+            }
         }
         if (!response.ok) {
             throw new Error(`Request failed with status: ${response.status}`);
