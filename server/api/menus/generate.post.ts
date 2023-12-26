@@ -3,6 +3,7 @@ import { extractMenu, extractShoppingList, formatMenuSpecs } from "@/server/util
 
 export default defineEventHandler(async event => {
     try {
+        console.log("got to api/generate/menu");
         const menuSpecs = await readBody(event)
         const prompt = buildAIPrompt(menuSpecs)
         const menuContent = await getOpenAIResponse(prompt)
