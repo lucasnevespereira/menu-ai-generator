@@ -125,6 +125,42 @@ const saveMenu = async (userID) => {
   }
 };
 
+const getOpenAIResponse = async (prompt) => {
+  const apiEndpoint = "https://api.openai.com/v1/chat/completions";
+  const requestBody = {
+    model: "gpt-3.5-turbo",
+    messages: [{ role: "user", content: prompt }],
+  };
+  try {
+    const response = await fetch(apiEndpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer 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`,
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    console.log(response.status);
+    if (!response.ok) {
+      throw new Error(`Request failed with status: ${response.status}`);
+    }
+
+    const chatCompletion = await response.json();
+
+    if (chatCompletion.choices && chatCompletion.choices.length > 0) {
+      console.log("message choice content", chatCompletion.choices[0].message);
+      return chatCompletion.choices[0].message.content;
+    }
+    throw new Error("No content in choices");
+  } catch (error) {
+    if (error) {
+      console.log("openai error", error);
+      throw new Error(`GetCompletion calling endpoint: ${error}`);
+    }
+  }
+};
+
 const generateMenu = async () => {
   isLoading.value = true;
   try {
@@ -135,6 +171,11 @@ const generateMenu = async () => {
         prompt: prompt,
       },
     });
+    console.log("api generate data", data);
+
+    const totoResponse = await getOpenAIResponse(prompt);
+    console.log("totoResponse", totoResponse);
+
     const generatedMenu = data.value;
     const menuSpecs = formData.value;
     if (generatedMenu) {
