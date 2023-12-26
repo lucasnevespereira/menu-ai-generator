@@ -8,5 +8,11 @@ export default defineNuxtConfig({
     ],
     tailwindcss: {
         cssPath: '~/assets/css/tailwind.css',
+    },
+    runtimeConfig: {
+        // Keys within public, will be also exposed to the client-side
+        public: {
+            openAiKey: process.env.NUXT_OPENAI_API_KEY || "some key",
+        }
     }
 })

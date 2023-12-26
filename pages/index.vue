@@ -15,6 +15,8 @@ import {
   formatMenuSpecs,
 } from "@/utils/format";
 
+const runtimeConfig = useRuntimeConfig();
+
 const store = useAppStore();
 store.setPageName("Dashboard");
 
@@ -136,12 +138,11 @@ const getOpenAIResponse = async (prompt) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer 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`,
+        Authorization: `Bearer ${runtimeConfig.public.openAiKey}`,
       },
       body: JSON.stringify(requestBody),
     });
 
-    console.log(response.status);
     if (!response.ok) {
       throw new Error(`Request failed with status: ${response.status}`);
     }
@@ -149,13 +150,12 @@ const getOpenAIResponse = async (prompt) => {
     const chatCompletion = await response.json();
 
     if (chatCompletion.choices && chatCompletion.choices.length > 0) {
-      console.log("message choice content", chatCompletion.choices[0].message);
       return chatCompletion.choices[0].message.content;
     }
     throw new Error("No content in choices");
   } catch (error) {
     if (error) {
-      console.log("openai error", error);
+      console.log("GetCompletion error", error);
       throw new Error(`GetCompletion calling endpoint: ${error}`);
     }
   }
@@ -165,20 +165,15 @@ const generateMenu = async () => {
   isLoading.value = true;
   try {
     const prompt = buildAIPrompt(formData.value);
-    const { data } = await useFetch("/api/menus/generate", {
-      method: "POST",
-      body: {
-        prompt: prompt,
-      },
-    });
-    console.log("api generate data", data);
-
-    const totoResponse = await getOpenAIResponse(prompt);
-    console.log("totoResponse", totoResponse);
-
-    const generatedMenu = data.value;
+    // const { data } = await useFetch("/api/menus/generate", {
+    //   method: "POST",
+    //   body: {
+    //     prompt: prompt,
+    //   },
+    // });
+    const generatedMenu = await getOpenAIResponse(prompt);
     const menuSpecs = formData.value;
-    if (generatedMenu) {
+    if (generatedMenu.length > 0) {
       const menuContent = extractMenu(generatedMenu);
       const shoppingList = extractShoppingList(generatedMenu);
       menu.value.content = menuContent;
