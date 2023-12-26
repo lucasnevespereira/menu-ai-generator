@@ -12,7 +12,8 @@ export default defineNuxtConfig({
     runtimeConfig: {
         // Keys within public, will be also exposed to the client-side
         public: {
-            openAiKey: process.env.NUXT_OPENAI_API_KEY || "some key",
+            openAiCompletionUrl: "https://api.openai.com/v1/chat/completions",
+            openAiKey: process.env.NUXT_OPENAI_API_KEY,
         }
     }
 })

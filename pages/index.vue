@@ -128,13 +128,13 @@ const saveMenu = async (userID) => {
 };
 
 const getOpenAIResponse = async (prompt) => {
-  const apiEndpoint = "https://api.openai.com/v1/chat/completions";
+  const openAiCompletionUrl = runtimeConfig.public.openAiCompletionUrl;
   const requestBody = {
     model: "gpt-3.5-turbo",
     messages: [{ role: "user", content: prompt }],
   };
   try {
-    const response = await fetch(apiEndpoint, {
+    const response = await fetch(openAiCompletionUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -165,12 +165,6 @@ const generateMenu = async () => {
   isLoading.value = true;
   try {
     const prompt = buildAIPrompt(formData.value);
-    // const { data } = await useFetch("/api/menus/generate", {
-    //   method: "POST",
-    //   body: {
-    //     prompt: prompt,
-    //   },
-    // });
     const generatedMenu = await getOpenAIResponse(prompt);
     const menuSpecs = formData.value;
     if (generatedMenu.length > 0) {
