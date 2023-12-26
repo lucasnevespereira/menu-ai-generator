@@ -9,6 +9,11 @@ import SelectInput from "@/components/ui/SelectInput.vue";
 import { Lang } from "@/types/enum";
 import { SAVE_TO_PDF } from "@/utils/pdf.js";
 import { COPY_TO_CLIPBOARD } from "@/utils/copy";
+import {
+  extractMenu,
+  extractShoppingList,
+  formatMenuSpecs,
+} from "@/utils/format";
 
 const store = useAppStore();
 store.setPageName("Dashboard");
@@ -120,61 +125,27 @@ const saveMenu = async (userID) => {
   }
 };
 
-const getOpenAIResponse = async (prompt) => {
-  const apiEndpoint = "https://api.openai.com/v1/chat/completions";
-  const requestBody = {
-    model: "gpt-3.5-turbo",
-    messages: [{ role: "user", content: prompt }],
-  };
-  try {
-    const response = await fetch(apiEndpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer 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`,
-      },
-      body: JSON.stringify(requestBody),
-    });
-
-    console.log(response.status);
-    if (!response.ok) {
-      throw new Error(`Request failed with status: ${response.status}`);
-    }
-
-    const chatCompletion = await response.json();
-
-    if (chatCompletion.choices && chatCompletion.choices.length > 0) {
-      console.log("message choice content", chatCompletion.choices[0].message);
-      return chatCompletion.choices[0].message.content;
-    }
-    throw new Error("No content in choices");
-  } catch (error) {
-    if (error) {
-      console.log("toto error", error);
-      throw new Error(`GetCompletion calling endpoint: ${error}`);
-    }
-  }
-};
-
 const generateMenu = async () => {
   isLoading.value = true;
   try {
-    console.log("formdata", formData.value);
+    const prompt = buildAIPrompt(formData.value);
     const { data } = await useFetch("/api/menus/generate", {
       method: "POST",
-      body: formData.value,
+      body: {
+        prompt: prompt,
+      },
     });
-
-    const totoResponse = await getOpenAIResponse("say hello");
-    console.log("totoResponse", totoResponse);
-
-    if (data.value) {
-      menu.value.content = data.value.menu;
-      menu.value.specs = data.value.specs;
-      menu.value.description = data.value.description;
-      menu.value.shoppingList = data.value.shoppingList;
+    const generatedMenu = data.value;
+    const menuSpecs = formData.value;
+    if (generatedMenu) {
+      const menuContent = extractMenu(generatedMenu);
+      const shoppingList = extractShoppingList(generatedMenu);
+      menu.value.content = menuContent;
+      menu.value.specs = menuSpecs;
+      menu.value.description = formatMenuSpecs(menuSpecs);
+      menu.value.shoppingList = shoppingList;
     } else {
-      throw error("something went wrong while generating menu");
+      throw new Error("something went wrong while generating menu");
     }
   } catch (err) {
     console.log(err);

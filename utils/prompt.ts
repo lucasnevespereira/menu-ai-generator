@@ -1,12 +1,12 @@
-import {MenuFormData} from "@/types/menu";
-import {Lang} from "@/types/enum";
+import type { MenuFormData } from "@/types/menu";
+import { Lang } from "@/types/enum";
 
 
 export function buildAIPrompt(data: MenuFormData) {
     if (data.lang == Lang.FR) {
         return getFrenchPrompt(data)
     } else {
-       return getEnglishPrompt(data)
+        return getEnglishPrompt(data)
     }
 }
 
