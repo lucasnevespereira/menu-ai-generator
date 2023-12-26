@@ -129,7 +129,7 @@ const generateMenu = async () => {
       body: formData.value,
     });
 
-    if (data.value.menu) {
+    if (data.value) {
       menu.value.content = data.value.menu;
       menu.value.specs = data.value.specs;
       menu.value.description = data.value.description;
